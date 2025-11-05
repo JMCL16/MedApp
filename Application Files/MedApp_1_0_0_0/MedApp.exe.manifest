@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="MedApp.exe" version="1.0.0.0" publicKeyToken="295c9eb911c02cf1" language="neutral" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="stethoscope.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="MedApp" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
+    <commandLine file="MedApp.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MedApp.exe" size="751008">
+      <assemblyIdentity name="MedApp" version="1.0.0.1" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>YBTLcREIIUJCd8chzaV3UUB4U2JewLwIzGnaU71/OKc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="MedApp.exe.config" size="187">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>+CM46OnHRrXZXNLMx7+U3V3iubiYL//d8hGOR13lDhU=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="stethoscope.ico" size="115649">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>g5+N+OB92yxXbFVEWRYzVcdJH68i+FqnQ0YW0BvjBfk=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=JEFF\jefer" issuerKeyHash="8be0d38207d27d784b4e07ee0f044e8441f45eea" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>53yIP0yzG5eMMULVMYAN/DMAG020W7h+n/ltqDxeWn0=</DigestValue></Reference></SignedInfo><SignatureValue>vIdeH7xWH06wcil9tbgY/iR/JUclb9x4Il+X8IjA4X43u4+eNr48u1fxB3m6EvMDDKzyBjlIKUhZHfDKYyPyykfzUahDo5hl8Voe6zey2ax0cE39Y1GoHZOHRCZEESWXkvs5iS8Y/vth8P+FsxssdZocq6reDRPFfBlrcI7hOao=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>xD5jMDQ21pJ9j1H7i0L3dfyHWdTIa7BjOLM8kv5cODCKf4mrp0VHT8lbUpz2QfH58fkgDRaO3W+VVj2qi9BGBaWGm/8Gh5etOV3KoiyiYrrbUHuW3bmocIR8eAhQbZ2E1LYsNZ1kq9xPebP5r/Juez4i26nOeMhnsnkz55mVTnE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="7d5a5e3ca86df99f7eb85bb44d1b0033fc0d8031d542318c971bb34c3f887ce7" Description="" Url=""><as:assemblyIdentity name="MedApp.exe" version="1.0.0.0" publicKeyToken="295c9eb911c02cf1" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=JEFF\jefer</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>q18zTb1RBq9XsSE4ksXCNJ4JVaq4v3Z8f3tlvZPYJmQ=</DigestValue></Reference></SignedInfo><SignatureValue>VuCdiYtEUzk5ZPuSdwOOh8Qw+x4jz+aIAq2UVSG0QVFteDIIy0ZZ0jFVYAk0otJCtCKQYYo8s9yGtiNson4RiuGU1fpfRN3FFhl7UpJgDWY7qy5qgixWbfKfPeFhuWP7Al74kaalKW90mxkMNobUbYcNGRoaXjFNVnU7oIV5XUk=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>xD5jMDQ21pJ9j1H7i0L3dfyHWdTIa7BjOLM8kv5cODCKf4mrp0VHT8lbUpz2QfH58fkgDRaO3W+VVj2qi9BGBaWGm/8Gh5etOV3KoiyiYrrbUHuW3bmocIR8eAhQbZ2E1LYsNZ1kq9xPebP5r/Juez4i26nOeMhnsnkz55mVTnE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIBwTCCASqgAwIBAgIQOdAxER7nH45Mqx+CcyywTDANBgkqhkiG9w0BAQsFADAfMR0wGwYDVQQDHhQASgBFAEYARgBcAGoAZQBmAGUAcjAeFw0yNTExMDUyMjMwNTlaFw0yNjExMDYwNDMwNTlaMB8xHTAbBgNVBAMeFABKAEUARgBGAFwAagBlAGYAZQByMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDEPmMwNDbWkn2PUfuLQvd1/IdZ1MhrsGM4szyS/lw4MIp/iaunRUdPyVtSnPZB8fnx+SANFo7db5VWPaqL0EYFpYab/waHl605XcqiLKJiuttQe5bduahwhHx4CFBtnYTUtiw1nWSr3E95s/mv8m57PiLbqc54yGeyeTPnmZVOcQIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAGSemn1E1lrq/yYvaHR4wq98Hba07/Flm9+HNeCy7T78b52C4rY37SMeK7W5ai/8jcxkBxsJMIMwkC17KZNUv7aw6vsDCbGMxRNs3/CAOCdRxwHltqqb+0h7Ic4E6CqPZUvRXXMaLS8REaxjCSxlLSEfMORhfAUmaau98F9Y7qMs</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
