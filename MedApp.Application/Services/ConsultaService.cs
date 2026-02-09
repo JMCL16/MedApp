@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿
 
-namespace MedApp
+namespace MedApp.Application.Services
 {
     public class ConsultaService
-    {
+    {/*
         private readonly ConexionBD _conexionBD;
 
         public ConsultaService(ConexionBD conexionBD)
@@ -52,6 +46,6 @@ namespace MedApp
                     
                 }
             }
-        }
+        }*/
     }
 }

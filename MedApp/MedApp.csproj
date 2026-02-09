@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{31DEC3FB-F629-4D52-AFD7-C79435CC3459}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>MedApp</RootNamespace>
     <AssemblyName>MedApp</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -66,6 +66,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -92,9 +95,6 @@
     <Compile Include="BuscarPaciente.Designer.cs">
       <DependentUpon>BuscarPaciente.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConexionBD.cs" />
-    <Compile Include="Consulta.cs" />
-    <Compile Include="ConsultaService.cs" />
     <Compile Include="DatosPersonales.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -125,11 +125,7 @@
     <Compile Include="NewPacient.Designer.cs">
       <DependentUpon>NewPacient.cs</DependentUpon>
     </Compile>
-    <Compile Include="Paciente.cs" />
-    <Compile Include="PacienteService.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User.cs" />
     <EmbeddedResource Include="AntecedentesMedicosControl.resx">
       <DependentUpon>AntecedentesMedicosControl.cs</DependentUpon>
     </EmbeddedResource>

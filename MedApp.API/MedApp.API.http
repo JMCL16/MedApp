@@ -1,0 +1,11 @@
+@MedApp.API_HostAddress = http://localhost:5052
+
+GET {{MedApp.API_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{MedApp.API_HostAddress}}/todos/1
+Accept: application/json
+
+###

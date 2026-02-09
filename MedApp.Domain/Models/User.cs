@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedApp
+namespace MedApp.Domain.Models
 {
     public enum RolUsuario
     {
@@ -16,9 +16,9 @@ namespace MedApp
     public class User
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public string PasswordKey { get; set; }
-        public string Roles {  get; set; }
+        public string? UserName { get; set; }
+        public string? PasswordKey { get; set; }
+        public string? Roles {  get; set; }
         public bool Activo { get; set; }
 
         public RolUsuario RolEnum
@@ -46,7 +46,7 @@ namespace MedApp
 
     public static class SesionActual
     {
-        public static User usuarioActual { get; set; }
+        public static User? usuarioActual { get; set; } = null!;
         public static bool EstaAutenticado()
         {
             return usuarioActual != null;
