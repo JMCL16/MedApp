@@ -1,8 +1,4 @@
-
-using Microsoft.Extensions.Options;
-using System.Reflection;
 using MedApp.IOC;
-using MedApp.Persistence.Data;
 
 public class Program
 {

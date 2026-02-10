@@ -35,7 +35,6 @@ namespace MedApp.Persistence.Repositories
         {
             OperationResult result = new OperationResult();
             {
-
                 try
                 {
                     _logger.LogInformation("Iniciando validación del paciente.");
@@ -44,38 +43,57 @@ namespace MedApp.Persistence.Repositories
                     if (!validationResult.IsValid)
                     {
                         _logger.LogWarning("Validación fallida para el paciente: {Errors}", validationResult.Errors);
-                        return OperationResult.Failure("Ocurrio un error al crear el paciente");
+                        return OperationResult.Failure($"Ocurrio un error al actualizar el paciente {validationResult}");
                     }
 
-                    string jsonAntecedentes = "[]";
-                    if (paciente.AntecedentesPatologicos != null && paciente.AntecedentesPatologicos.Any())
+                    using (var conn = new SqlConnection(_conexionBD))
                     {
-                        jsonAntecedentes = JsonSerializer.Serialize(paciente.AntecedentesPatologicos);
-                    }
+                        await conn.OpenAsync();
+                        using (var cmd = new SqlCommand("sp_ActualizarPaciente", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@Cedula", paciente.Cedula);
 
-                    //Insertar paciente
-                    var presult = await ExecuteStoredProcedureAsync("sp_ActualizarPaciente", new SqlParameter("@Cedula", paciente.Cedula), new SqlParameter("@Nombre", paciente.Nombre), new SqlParameter("@Apellido", paciente.Apellido), new SqlParameter("@FechaNacimiento", paciente.FechaNacimiento), new SqlParameter("@Genero", paciente.Genero), new SqlParameter("@Nacionalidad", paciente.Nacionalidad), new SqlParameter("@Direccion", paciente.Direccion), new SqlParameter("@Ocupacion", paciente.Ocupacion), new SqlParameter("@Telefono", paciente.Telefono), new SqlParameter("@OperacionesPrevias", paciente.OperacionesPrevias), new SqlParameter("@AntecedentesFamiliares", paciente.AntecedentesFamiliares), new SqlParameter("@UsuarioRegistro", paciente.UsuarioRegistro), new SqlParameter("@AntecedentesPatologicosJson", jsonAntecedentes));
+                            //Actualizar paciente
+                            cmd.Parameters.AddWithValue("@Direccion", paciente.Direccion);
+                            cmd.Parameters.AddWithValue("@Ocupacion", paciente.Ocupacion);
+                            cmd.Parameters.AddWithValue("@Telefono", paciente.Telefono);
+                            cmd.Parameters.AddWithValue("@OperacionesPrevias", paciente.OperacionesPrevias);
+                            cmd.Parameters.AddWithValue("@AntecedentesFamiliares", paciente.AntecedentesFamiliares);
 
+                            //hacer que no se envien en string mas que el campo que quiero actualizar
+                            string jsonAntecedentes = "[]";
+                            if (paciente.AntecedentesPatologicos != null && paciente.AntecedentesPatologicos.Any())
+                            {
+                                jsonAntecedentes = JsonSerializer.Serialize(paciente.AntecedentesPatologicos);
+                            }
+                            cmd.Parameters.AddWithValue("@AntecedentesPatologicosJson", jsonAntecedentes);
 
+                            object? rowsAffected = await cmd.ExecuteScalarAsync();
+                            int newNum = Convert.ToInt32(rowsAffected);
 
-                    if (presult > 0)
-                    {
-                        _logger.LogInformation("Paciente creado exitosamente.");
-                        result = OperationResult.Success("Paciente creado exitosamente.");
-                    }
-                    else
-                    {
-                        _logger.LogWarning("No se pudo crear el paciente.");
-                        result = OperationResult.Failure("No se pudo crear el paciente.");
+                            if (newNum > 0)
+                            {
+                                _logger.LogInformation("Paciente actualizado exitosamente.");
+                                result = OperationResult.Success("Paciente actualizado exitosamente.");
+                            }
+                            else
+                            {
+                                _logger.LogWarning("No se pudo actualizar el paciente.");
+                                result = OperationResult.Failure("No se pudo actualizar el paciente.");
+                            }
+                        }
+                        return result;
                     }
                 }
                 catch (Exception ex)
                 {
                     result.IsSuccess = false;
-                    result.Message = $"Ocurrio un error al crear el paciente. {ex.Message}";
-                    _logger.LogError(ex, "Ocurrio un error al crear el paciente.");
+                    result.Message = $"Ocurrio un error al actualizar el paciente. {ex.Message}";
+                    _logger.LogError(ex, "Ocurrio un error al actualizar el paciente.");
                 }
                 return result;
+
             }
         }
 

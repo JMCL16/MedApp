@@ -14,6 +14,7 @@ namespace MedApp.IOC
             services.AddScoped<IPacienteRepository, PacienteRepository>();
             services.AddScoped<IPacienteServices, PacienteService>();
             services.AddScoped<PacienteValidator>();
+            services.AddScoped<PacienteUpdateValidator>();
         }
     }
 }

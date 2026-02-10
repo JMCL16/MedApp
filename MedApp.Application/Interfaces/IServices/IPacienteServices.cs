@@ -1,4 +1,4 @@
-﻿using MedApp.Application.DTOs;
+﻿using MedApp.Application.DTOs.Paciente;
 using MedApp.Domain.Base;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace MedApp.Application.Interfaces.IServices
     public interface IPacienteServices
     {
         Task<OperationResult> CrearPacienteAsync(PacienteDTO pacienteDto);
-        Task<OperationResult> ActualizarPacienteAsync(PacienteDTO pacienteDto);
+        Task<OperationResult> ActualizarPacienteAsync(PacienteUpdateDTO pacienteUpdateDto);
         Task<OperationResult> ObtenerPorCedulaAsync(string cedula);
         Task<OperationResult> ObtenerPorNombreAsync (string nombre);
     }

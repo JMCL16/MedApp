@@ -1,51 +1,33 @@
 ﻿
 
+using MedApp.Application.DTOs;
+using MedApp.Application.Interfaces.IServices;
+using MedApp.Domain.Base;
+
 namespace MedApp.Application.Services
 {
-    public class ConsultaService
-    {/*
-        private readonly ConexionBD _conexionBD;
-
-        public ConsultaService(ConexionBD conexionBD)
+    public class ConsultaService : IConsultaService
+    {
+        
+        public ConsultaService() { }
+        public Task<OperationResult> ActualizarConsultaAsync(ConsultaDTO consultaDto)
         {
-            _conexionBD = conexionBD;
+            throw new NotImplementedException();
         }
-        public bool GuardarConsulta(Consulta consulta)
+
+        public Task<OperationResult> CrearConsultaAsync(ConsultaDTO consultaDto)
         {
-            using (SqlConnection conn = _conexionBD.ObtenerCadenaConexion())
-            {
-                conn.Open();
-                using (SqlTransaction transaction = conn.BeginTransaction())
-                {
-                    try
-                    {
-                        string queryConsulta = @"INSERT INTO Consulta (PacienteId, FechaConsulta, Diagnostico, Tratamiento)
-                             VALUES (@PacienteId, @FechaConsulta, @Diagnostico, @Tratamiento); SELECT CAST(SCOPE_IDENTITY()AS INT);";
+            throw new NotImplementedException();
+        }
 
-                        int consultaId;
-                        using (SqlCommand cmd = new SqlCommand(queryConsulta, conn, transaction))
-                        {
-                            cmd.Parameters.AddWithValue("@PacienteId", consulta.PacienteId);
-                            cmd.Parameters.AddWithValue("@FechaConsulta", consulta.FechaConsulta);
-                            cmd.Parameters.AddWithValue("@Diagnostico", consulta.Diagnostico);
-                            cmd.Parameters.AddWithValue("@Tratamiento", consulta.Tratamiento);
-                            
-                            consultaId = (int)cmd.ExecuteScalar();
-                        }
-                        transaction.Commit();
-                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        MessageBox.Show(string.Format("Error al guardar paciente: {0}", ex.Message),
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
+        public Task<OperationResult> ObtenerPorIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
 
-                    }
-                    
-                }
-            }
-        }*/
+        public Task<OperationResult> ObtenerPorPacienteIdAsync(int pacienteId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

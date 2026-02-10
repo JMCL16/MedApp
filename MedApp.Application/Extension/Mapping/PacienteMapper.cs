@@ -1,10 +1,10 @@
-﻿using MedApp.Application.DTOs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MedApp.Domain.Models;
+using MedApp.Application.DTOs.Paciente;
 
 namespace MedApp.Application.Extension.Mapping
 {
@@ -31,6 +31,22 @@ namespace MedApp.Application.Extension.Mapping
                     FechaRegistro = DateTime.Now,
                     UsuarioRegistro = paciente.UsuarioRegistro,
                     Activo = true
+                };
+            }
+        }
+
+        public static Paciente MapToEntityUpdate(PacienteUpdateDTO paciente)
+        {
+            {
+                return new Paciente
+                {
+                    Cedula = paciente.Cedula,
+                    Direccion = paciente.Direccion,
+                    Ocupacion = paciente.Ocupacion,
+                    Telefono = paciente.Telefono,
+                    OperacionesPrevias = paciente.OperacionesPrevias,
+                    AntecedentesFamiliares = paciente.AntecedentesFamiliares,
+                    AntecedentesPatologicos = paciente.AntecedentesPatologicos
                 };
             }
         }

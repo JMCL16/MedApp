@@ -1,4 +1,5 @@
-﻿using MedApp.Domain.Models;
+﻿using MedApp.Domain.Base;
+using MedApp.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ namespace MedApp.Application.Interfaces.Repositories
 {
     public interface IConsultaRepository
     {
-        Task<bool> CrearConsultaAsync(Consulta consulta);
+        Task<OperationResult> CrearConsultaAsync(Consulta consulta);
+        Task<OperationResult> ActualizarConsultaAsync(Consulta consulta);
+        Task<OperationResult> ObtenerPorIdAsync(int id);
+        Task<IEnumerable<Consulta>> ObtenerPorPacienteIdAsync(int pacienteId);
     }
 }

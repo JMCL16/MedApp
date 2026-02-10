@@ -1,13 +1,13 @@
 ﻿using System.Text;
 using System.Data;
 using MedApp.Domain.Models;
-using MedApp.Application.DTOs;
 using MedApp.Domain.Base;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MedApp.Application.Extension.Mapping;
 using MedApp.Application.Interfaces.Repositories;
 using MedApp.Application.Interfaces.IServices;
+using MedApp.Application.DTOs.Paciente;
 
 namespace MedApp.Application.Services
 {
@@ -50,29 +50,30 @@ namespace MedApp.Application.Services
             return result;
         }
 
-        public async Task<OperationResult> ActualizarPacienteAsync(PacienteDTO pacienteDto)
+        public async Task<OperationResult> ActualizarPacienteAsync(PacienteUpdateDTO pacienteUpdateDto)
         {
             _ = new OperationResult();
             OperationResult result;
             try
             {
                 _logger.LogInformation("Iniciando proceso de actualizacion de paciente");
-                var existe = await _pacienteRepository.ExistePorCedulaAsync(pacienteDto.Cedula);
+                var existe = await _pacienteRepository.ExistePorCedulaAsync(pacienteUpdateDto.Cedula);
                 if (existe)
                 {
-                    return OperationResult.Success("El paciente existe");
+                    var actPaciente = PacienteMapper.MapToEntityUpdate(pacienteUpdateDto);
+                    result = await _pacienteRepository.ActualizarPacienteAsync(actPaciente);
+                    _logger.LogInformation("Paciente actualizado exitosamente");
+
                 }
-
-                var nuevoPaciente = PacienteMapper.MapToEntityCreate(pacienteDto);
-                result = await _pacienteRepository.CrearPacienteAsync(nuevoPaciente);
-
-                _logger.LogInformation("Paciente creado exitosamente");
-
+                else
+                {
+                    return OperationResult.Failure("El paciente no existe");
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error al crear paciente: {ex.Message}");
-                result = OperationResult.Failure($"Error al crear paciente: {ex.Message}");
+                _logger.LogError($"Error al actualizar paciente: {ex.Message}");
+                result = OperationResult.Failure($"Error al actualizar paciente: {ex.Message}");
             }
             return result;
         }

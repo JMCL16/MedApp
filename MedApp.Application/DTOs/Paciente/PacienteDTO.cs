@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedApp.Application.DTOs
+namespace MedApp.Application.DTOs.Paciente
 {
     public record class PacienteDTO
     {

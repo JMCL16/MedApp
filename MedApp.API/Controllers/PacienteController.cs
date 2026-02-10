@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MedApp.Domain.Models;
 using MedApp.Application.Interfaces.IServices;
-using MedApp.Application.DTOs;
+using MedApp.Application.DTOs.Paciente;
 
 namespace MedApp.API.Controllers
 {
@@ -68,5 +68,20 @@ namespace MedApp.API.Controllers
             }
         }
 
+        [HttpPatch]
+        public async Task<IActionResult> ActualizarPaciente([FromBody] PacienteUpdateDTO pacienteUpdateDto)
+        {
+            var result = await _pacienteService.ActualizarPacienteAsync(pacienteUpdateDto);
+            if (result.IsSuccess)
+            {
+                _logger.LogInformation("El paciente ha sido actualizado");
+                return Ok(result);
+            }
+            else
+            {
+                _logger.LogWarning("Ha ocurrido un error al actualizar el paciente");
+                return BadRequest(result);
+            }
+        }
     }
 }
