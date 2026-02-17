@@ -1,4 +1,5 @@
-﻿using MedApp.Domain.Base;
+﻿using MedApp.Application.DTOs.Consultas;
+using MedApp.Domain.Base;
 using MedApp.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace MedApp.Application.Interfaces.Repositories
     {
         Task<OperationResult> CrearConsultaAsync(Consulta consulta);
         Task<OperationResult> ActualizarConsultaAsync(Consulta consulta);
-        Task<OperationResult> ObtenerPorIdAsync(int id);
+        Task<IEnumerable<ConsultaDTO>> ObtenerPorCedulaAsync(string cedula);
         Task<IEnumerable<Consulta>> ObtenerPorPacienteIdAsync(int pacienteId);
     }
 }

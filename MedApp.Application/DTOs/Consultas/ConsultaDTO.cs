@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MedApp.Application.DTOs
+namespace MedApp.Application.DTOs.Consultas
 {
     public class ConsultaDTO
     {
-        public int IdConsulta { get; set; }
-        public int PacienteId { get; set; }
+        public int Id { get; set; }
         public string? CedulaPaciente { get; set; }
         public DateTime FechaConsulta { get; set; }
         public string? Diagnostico { get; set; }

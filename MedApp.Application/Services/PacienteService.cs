@@ -50,6 +50,7 @@ namespace MedApp.Application.Services
             return result;
         }
 
+        // Arreglar datos requeridos del Dto, para que no pida id y pacienteId, ya que no se pueden actualizar
         public async Task<OperationResult> ActualizarPacienteAsync(PacienteUpdateDTO pacienteUpdateDto)
         {
             _ = new OperationResult();
