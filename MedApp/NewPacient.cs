@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MedApp.Presentation.DTOs.Paciente;
+using MedApp.Presentation.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,10 +14,10 @@ namespace MedApp
 {
     public partial class NewPacient : Form
     {
-        private Paciente pacienteActual;
+        private readonly PacienteService _service;
+        private PacienteDTO pacienteDto;
         private int pasoActual = 0;
         private List<UserControl> pasos;
-        private PacienteService pacienteService;
 
         private DatosPersonales paso1;
         private AntecedentesMedicosControl paso2;
@@ -24,15 +26,15 @@ namespace MedApp
         {
             InitializeComponent();
             InicializarFormulario();
-            ConexionBD conexion = new ConexionBD();
-            pacienteService = new PacienteService(conexion);
+            _service = new PacienteService();
         }
 
         private void InicializarFormulario()
         {
-            pacienteActual = new Paciente
+            pacienteDto = new PacienteDTO
             {
                 FechaNacimiento = DateTime.Now.AddYears(-30),
+                AntecedentesPatologicos = new List<string>()
             };
 
             //Crear intancias de los userControls
@@ -55,8 +57,16 @@ namespace MedApp
 
             // Actualizar estado de botones
             BackBtn.Enabled = numeroPaso > 0;
-            NextBtn.Visible = numeroPaso < pasos.Count - 1;
-            SaveBtn.Visible = numeroPaso == pasos.Count - 1;
+            if (numeroPaso < pasos.Count - 1)
+            {
+                NextBtn.Visible = true;
+                SaveBtn.Visible = false;
+            }
+            else
+            {
+                NextBtn.Visible = false;
+                SaveBtn.Visible = true;
+            }
 
             pasoActual = numeroPaso;
         }
@@ -81,12 +91,12 @@ namespace MedApp
                 case 0:
                     esValido = paso1.ValidarDatos();
                     if (esValido)
-                        paso1.GuardarModelo(pacienteActual);
+                        paso1.GuardarModelo(pacienteDto);
                     break;
                 case 1:
                     esValido = paso2.ValidarDatos();
                     if (esValido)
-                        paso2.GuardarModelo(pacienteActual);
+                        paso2.GuardarModelo(pacienteDto);
                     break;
             }
 
@@ -101,44 +111,67 @@ namespace MedApp
             switch (pasoActual)
             {
                 case 1:
-                    paso1.GuardarModelo(pacienteActual);
+                    paso1.GuardarModelo(pacienteDto);
                     break;
                 case 2:
-                    paso2.GuardarModelo(pacienteActual);
+                    paso2.GuardarModelo(pacienteDto);
                     break;
             }
 
             MostrarPaso(pasoActual - 1);
         }
 
-        private void SaveBtn_Click(object sender, EventArgs e)
+        private async void SaveBtn_Click(object sender, EventArgs e)
         {
             // Validar el último paso
             if (!paso2.ValidarDatos())
                 return;
 
             // Guardar datos del último paso
-            paso2.GuardarModelo(pacienteActual);
+            paso2.GuardarModelo(pacienteDto);
 
-            // Aquí guardarías en la base de datos
-            if (pacienteService.GuardarPaciente(pacienteActual))
+            SaveBtn.Enabled = false;
+            SaveBtn.Text = "Guardando...";
+            Cursor = Cursors.WaitCursor;
+
+            try
             {
-                MessageBox.Show("Paciente registrado exitosamente", "Éxito",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.DialogResult = DialogResult.OK;
-                
-                if (MessageBox.Show("Desea abrir una consulta con este paciente?", "Pregunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                bool exito = await _service.CrearPaciente(pacienteDto);
+
+                if (exito)
                 {
-                    NewConsult consult = new NewConsult(pacienteActual);
-                    consult.ShowDialog();
+                    MessageBox.Show("Paciente creado exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    /*
+                    if( MessageBox.Show("¿Desea registrar una consulta para este paciente?", "Registrar Consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        var pacienteCreado = await _service.ObtenerPorCedula(pacienteDto.Cedula);
+                        new NewConsult consult = new NewConsult(pacienteCreado);  
+                        consult.ShowDialog();
+                    }*/
+                    this.Close();
                 }
                 else
                 {
-                    new Main().Show();
-                }
+                    MessageBox.Show("Error al crear el paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                this.Close();
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error de conexion {ex.Message}");
+            }
+            finally
+            {
+                SaveBtn.Enabled = true;
+                SaveBtn.Text = "Guardar";
+                Cursor = Cursors.Default;
+            }
+
+        }
+
+        private void NewPacient_Load(object sender, EventArgs e)
+        {
 
         }
     }

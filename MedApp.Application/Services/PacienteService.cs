@@ -1,13 +1,14 @@
-﻿using System.Text;
-using System.Data;
-using MedApp.Domain.Models;
+﻿using MedApp.Application.DTOs.Paciente;
+using MedApp.Application.Extension.Mapping;
+using MedApp.Application.Extension.Validators.PacienteValidators;
+using MedApp.Application.Interfaces.IServices;
+using MedApp.Application.Interfaces.Repositories;
 using MedApp.Domain.Base;
+using MedApp.Domain.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MedApp.Application.Extension.Mapping;
-using MedApp.Application.Interfaces.Repositories;
-using MedApp.Application.Interfaces.IServices;
-using MedApp.Application.DTOs.Paciente;
+using System.Data;
+using System.Text;
 
 namespace MedApp.Application.Services
 {
@@ -16,11 +17,15 @@ namespace MedApp.Application.Services
         private readonly IPacienteRepository _pacienteRepository;
         private readonly IConfiguration _configuration;
         private readonly ILogger<Paciente> _logger;
-        public PacienteService(IPacienteRepository repository, ILogger<Paciente> logger, IConfiguration configuration)
+        private readonly PacienteUpdateValidator _pacienteUpdateValidator;
+        private readonly PacienteValidator _pacienteValidator;
+        public PacienteService(IPacienteRepository repository, ILogger<Paciente> logger, IConfiguration configuration, PacienteUpdateValidator pacienteUpdateValidator, PacienteValidator pacienteValidator)
         {
             _pacienteRepository = repository;
             _logger = logger;
             _configuration = configuration;
+            _pacienteUpdateValidator = pacienteUpdateValidator;
+            _pacienteValidator = pacienteValidator;
         }
 
         public async Task<OperationResult> CrearPacienteAsync(PacienteDTO pacienteDto)
@@ -29,6 +34,15 @@ namespace MedApp.Application.Services
             OperationResult result;
             try
             {
+                _logger.LogInformation("Iniciando validación del paciente.");
+
+                var validationResult = await _pacienteValidator.ValidateAsync(pacienteDto);
+                if (!validationResult.IsValid)
+                {
+                    _logger.LogWarning("Validación fallida para el paciente: {Errors}", validationResult.Errors);
+                    return OperationResult.Failure("Ocurrio un error al crear el paciente");
+                }
+
                 _logger.LogInformation("Iniciando proceso de creacion de paciente");
                 var existe = await _pacienteRepository.ExistePorCedulaAsync(pacienteDto.Cedula);
                 if (existe)
@@ -57,6 +71,15 @@ namespace MedApp.Application.Services
             OperationResult result;
             try
             {
+                _logger.LogInformation("Iniciando validación del paciente.");
+
+                var validationResult = await _pacienteUpdateValidator.ValidateAsync(pacienteUpdateDto);
+                if (!validationResult.IsValid)
+                {
+                    _logger.LogWarning("Validación fallida para el paciente: {Errors}", validationResult.Errors);
+                    return OperationResult.Failure($"Ocurrio un error al actualizar el paciente {validationResult}");
+                }
+
                 _logger.LogInformation("Iniciando proceso de actualizacion de paciente");
                 var existe = await _pacienteRepository.ExistePorCedulaAsync(pacienteUpdateDto.Cedula);
                 if (existe)

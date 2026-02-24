@@ -1,0 +1,64 @@
+﻿using MedApp.Presentation.DTOs.Paciente;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MedApp.Presentation.Services 
+{
+    public class PacienteService
+    {
+        private static readonly HttpClient _client = new HttpClient();
+        private readonly string _endpoint;
+
+        public PacienteService()
+        {
+            string baseUrl = AppConfig.ApiUrl;
+            _endpoint = $"{baseUrl}/Paciente";
+        }
+
+        public async Task<bool> CrearPaciente(PacienteDTO pacienteDto)
+        {
+            var json = JsonConvert.SerializeObject(pacienteDto);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            try
+            {
+
+                var response = await _client.PostAsync(_endpoint, content);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al crear paciente: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<PacienteDTO> ObtenerPacientePorCedula(string cedula)
+        {
+            try
+            {
+                var response = await _client.GetAsync($"{_endpoint}?cedula={cedula}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<PacienteDTO>(jsonResponse);
+                }
+                else
+                {
+                    Console.WriteLine($"Error al obtener paciente: {response.ReasonPhrase}");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener paciente: {ex.Message}");
+                return null;
+            }
+        }
+    }
+}

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MedApp.Presentation.DTOs.Paciente;
+using MedApp.Presentation.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,14 +14,13 @@ namespace MedApp
 {
     public partial class BuscarPaciente : Form
     {
-        private PacienteService pacienteService;
-        private List<Paciente> pacientesEncontrados;
-        public Paciente  PacienteSeleccionado { get; private set; }
+        private PacienteService _service;
+        private List<PacienteDTO> pacientesEncontrados;
+        public PacienteDTO  PacienteSeleccionado { get; private set; }
         public BuscarPaciente()
         {
             InitializeComponent();
-            ConexionBD conexionBD = new ConexionBD();
-            pacienteService = new PacienteService(conexionBD);
+            _service = new PacienteService();
             ConfigurarDataGridView();
         }
 
@@ -67,7 +68,7 @@ namespace MedApp
             });
         }
 
-        private void btnBuscar_Click(object sender, EventArgs e)
+        private async void btnBuscar_Click(object sender, EventArgs e)
         {
             string criterioBusqueda = txtBusqueda.Text.Trim();
 
@@ -81,13 +82,12 @@ namespace MedApp
             // Buscar por cédula o nombre
             if (rbCedula.Checked)
             {
-                Paciente paciente = pacienteService.ObtenerPacientePorCedula(criterioBusqueda);
-                pacientesEncontrados = paciente != null ? new List<Paciente> { paciente } : new List<Paciente>();
+                PacienteDTO paciente = await _service.ObtenerPacientePorCedula(criterioBusqueda);
+                pacientesEncontrados = paciente != null ? new List<PacienteDTO> { paciente } : new List<PacienteDTO>();
                 txtBusqueda.Focus();
             }
             else
             {
-                pacientesEncontrados = pacienteService.BuscarPacientesPorNombre(criterioBusqueda);
                 
             }
 
@@ -110,7 +110,7 @@ namespace MedApp
                 return;
             }
 
-            PacienteSeleccionado = (Paciente)dgvPacientes.SelectedRows[0].DataBoundItem;
+            PacienteSeleccionado = (PacienteDTO)dgvPacientes.SelectedRows[0].DataBoundItem;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

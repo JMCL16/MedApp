@@ -1,4 +1,6 @@
 ﻿
+using MedApp.Application.DTOs.Login;
+using MedApp.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -8,69 +10,47 @@ namespace MedApp.API.Controllers
     [ApiController]
     public class AutenticationController : ControllerBase
     {
-        /*
-        private readonly string _connectionString;
+        private readonly ILogger<AutenticationController> _logger;
+        private readonly IAuthService _authService;
 
-        public AutenticationController(IConfiguration configuration)
+        public AutenticationController(ILogger<AutenticationController> logger, IAuthService authService)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _logger = logger;
+            _authService = authService;
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<LoginResponse>> Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
         {
-            // Implement login logic here using _connectionString
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(_connectionString))
-                {
-                    await conn.OpenAsync();
-                    // Example query - replace with actual authentication logic
-                    string query = @"SELECT Id, UserName, PasswordKey, Roles, Activo FROM Users WHERE UserName = @UserName AND Password = @Password AND Activo = 1" ;
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@UserName", request.UserName);
-                        cmd.Parameters.AddWithValue("@Password", request.Password);
+            var result = await _authService.LoginAsync(loginDTO);
 
-                        using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
-                        {
-                            if (await reader.ReadAsync())
-                            {
-                                User user = new User
-                                {
-                                    Id = reader.GetInt32(0),
-                                    UserName = reader.GetString(1),
-                                    PasswordKey = reader.GetString(2),
-                                    Roles = reader.GetString(3),
-                                    Activo = reader.GetBoolean(4)
-                                };
-                                return Ok(new LoginResponse
-                                {
-                                    Success = true,
-                                    Message = "Login successful",
-                                    User = user
-                                });
-                            }
-                        }                        
-                    }
-                }
-                return Unauthorized(new LoginResponse
-                {
-                    Success = false,
-                    Message = "Invalid username or password",
-                    User = null
-                });
-
-            }
-            catch (Exception ex)
+            if (!result.IsSuccess)
             {
-                return StatusCode(500, new LoginResponse
-                {
-                    Success = false,
-                    Message = $"An error occurred during login: {ex.Message}",
-                    User = null
-                });
+                return Unauthorized(new { mensaje = result.Message });
             }
-        }*/
+            return Ok(result.Data);
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] LoginDTO registerDTO)
+        {
+
+            var result = await _authService.RegisterAsync(registerDTO);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(new { mensaje = result.Message });
+            }
+            return Ok(201);
+        }
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateRol([FromBody] ActualizarRolDTO updateRolDTO)
+        {
+            var result = await _authService.UpdateRolAsync(updateRolDTO);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(new { mensaje = result.Message });
+            }
+            return Ok(result.Data);
+        }
     }
 }

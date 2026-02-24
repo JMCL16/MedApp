@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using MedApp.Application.DTOs.Paciente;
 using MedApp.Domain.Models;
 
 
 namespace MedApp.Application.Extension.Validators.PacienteValidators
 {
-    public class PacienteValidator : AbstractValidator<Paciente>
+    public class PacienteValidator : AbstractValidator<PacienteDTO>
     {
         public PacienteValidator()
         {

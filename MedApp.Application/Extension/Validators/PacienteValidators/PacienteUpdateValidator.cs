@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using MedApp.Application.DTOs.Paciente;
 using MedApp.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MedApp.Application.Extension.Validators.PacienteValidators
 {
-    public class PacienteUpdateValidator : AbstractValidator<Paciente>
+    public class PacienteUpdateValidator : AbstractValidator<PacienteUpdateDTO>
     {
         public PacienteUpdateValidator()
         {

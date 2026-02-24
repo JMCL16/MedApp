@@ -5,6 +5,7 @@ using MedApp.Application.Services;
 using MedApp.Application.Interfaces.IServices;
 using MedApp.Application.Extension.Validators.PacienteValidators;
 using MedApp.Application.Extension.Validators.ConsultaValidators;
+using MedApp.Application.Interfaces.IRepositories;
 
 namespace MedApp.IOC
 {
@@ -20,6 +21,8 @@ namespace MedApp.IOC
             services.AddScoped<IConsultaService, ConsultaService>();
             services.AddScoped<ConsultaValidator>();
             services.AddScoped<ConsultaUpdateValidator>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IAuthService, AuthService>();
 
         }
     }

@@ -16,19 +16,15 @@ namespace MedApp.Persistence.Repositories
     {
         private readonly string _conexionBD;
         private readonly IConfiguration _configuration;
-        private readonly PacienteValidator _pacienteValidator;
-        private readonly PacienteUpdateValidator _pacienteUpdateValidator;
         private readonly ILogger<Paciente> _logger;
 
 
-        public PacienteRepository(IConfiguration configuration, ILogger<Paciente> logger, PacienteValidator pacienteValidator, PacienteUpdateValidator pacienteUpdateValidator)
+        public PacienteRepository(IConfiguration configuration, ILogger<Paciente> logger)
         {
             _configuration = configuration;
             _logger = logger;
-            _pacienteValidator = pacienteValidator;
             _conexionBD = _configuration.GetConnectionString("DefaultConnection")
                 ?? throw new Exception("Connection string not fuond");
-            _pacienteUpdateValidator = pacienteUpdateValidator;
         }
 
         public async Task<OperationResult> ActualizarPacienteAsync(Paciente paciente)
@@ -37,15 +33,6 @@ namespace MedApp.Persistence.Repositories
             {
                 try
                 {
-                    _logger.LogInformation("Iniciando validación del paciente.");
-
-                    var validationResult = await _pacienteUpdateValidator.ValidateAsync(paciente);
-                    if (!validationResult.IsValid)
-                    {
-                        _logger.LogWarning("Validación fallida para el paciente: {Errors}", validationResult.Errors);
-                        return OperationResult.Failure($"Ocurrio un error al actualizar el paciente {validationResult}");
-                    }
-
                     using (var conn = new SqlConnection(_conexionBD))
                     {
                         await conn.OpenAsync();
@@ -101,28 +88,16 @@ namespace MedApp.Persistence.Repositories
         {
             OperationResult result = new OperationResult();
             {
-                
                 try
                 {
-                    _logger.LogInformation("Iniciando validación del paciente.");
-                    
-                    var validationResult = await _pacienteValidator.ValidateAsync(paciente);
-                    if (!validationResult.IsValid)
-                    {
-                        _logger.LogWarning("Validación fallida para el paciente: {Errors}", validationResult.Errors);
-                        return OperationResult.Failure("Ocurrio un error al crear el paciente");
-                    }
-
-                    string jsonAntecedentes = "[]";
+                     string jsonAntecedentes = "[]";
                     if (paciente.AntecedentesPatologicos != null && paciente.AntecedentesPatologicos.Any())
                     {
                         jsonAntecedentes = JsonSerializer.Serialize(paciente.AntecedentesPatologicos);
                     }
 
                     //Insertar paciente
-                    var presult = await ExecuteStoredProcedureAsync("sp_CrearPacientes", new SqlParameter("@Cedula", paciente.Cedula), new SqlParameter("@Nombre", paciente.Nombre), new SqlParameter("@Apellido", paciente.Apellido), new SqlParameter("@FechaNacimiento", paciente.FechaNacimiento), new SqlParameter("@Genero", paciente.Genero), new SqlParameter("@Nacionalidad", paciente.Nacionalidad), new SqlParameter("@Direccion", paciente.Direccion), new SqlParameter("@Ocupacion", paciente.Ocupacion), new SqlParameter("@Telefono", paciente.Telefono), new SqlParameter("@OperacionesPrevias", paciente.OperacionesPrevias), new SqlParameter("@AntecedentesFamiliares", paciente.AntecedentesFamiliares), new SqlParameter("@UsuarioRegistro", paciente.UsuarioRegistro), new SqlParameter("@AntecedentesPatologicosJson", jsonAntecedentes));
-
-                    
+                    var presult = await ExecuteStoredProcedureAsync("sp_CrearPacientes", new SqlParameter("@Cedula", paciente.Cedula), new SqlParameter("@Nombre", paciente.Nombre), new SqlParameter("@Apellido", paciente.Apellido), new SqlParameter("@FechaNacimiento", paciente.FechaNacimiento), new SqlParameter("@Genero", paciente.Genero), new SqlParameter("@Nacionalidad", paciente.Nacionalidad), new SqlParameter("@Direccion", paciente.Direccion), new SqlParameter("@Ocupacion", paciente.Ocupacion), new SqlParameter("@Telefono", paciente.Telefono), new SqlParameter("@OperacionesPrevias", paciente.OperacionesPrevias), new SqlParameter("@AntecedentesFamiliares", paciente.AntecedentesFamiliares), new SqlParameter("@UsuarioRegistro", paciente.UsuarioRegistro), new SqlParameter("@AntecedentesPatologicosJson", jsonAntecedentes));  
 
                     if (presult > 0)
                     {

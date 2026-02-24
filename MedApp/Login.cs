@@ -5,7 +5,7 @@ namespace MedApp
 {
     public partial class Login : Form
     {
-        private ConexionBD conexionBD;
+
         public Login()
         {
             InitializeComponent();

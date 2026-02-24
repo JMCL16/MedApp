@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedApp.Presentation.DTOs.Paciente;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +18,7 @@ namespace MedApp
             InitializeComponent();
         }
 
-        public void GuardarModelo(Paciente paciente)
+        public void GuardarModelo(PacienteDTO paciente)
         {
             paciente.OperacionesPrevias = txtCirugias.Text;
             paciente.AntecedentesFamiliares = txtAntecedentesFamiliares.Text;
@@ -28,7 +29,7 @@ namespace MedApp
             }
         }
 
-        public void CargarModelo(Paciente paciente)
+        public void CargarModelo(PacienteDTO paciente)
         {
             txtCirugias.Text = paciente.OperacionesPrevias;
             txtAntecedentesFamiliares.Text = paciente.AntecedentesFamiliares;

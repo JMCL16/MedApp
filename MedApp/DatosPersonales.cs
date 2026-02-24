@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedApp.Presentation.DTOs.Paciente;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,7 +19,7 @@ namespace MedApp
             lbSexo.SelectedIndex = 0;
         }
 
-        public void GuardarModelo(Paciente paciente)
+        public void GuardarModelo(PacienteDTO paciente)
         {
             paciente.Cedula = txtCedula.Text.Trim();
             paciente.Nombre = txtNombre.Text.Trim();
@@ -33,7 +34,7 @@ namespace MedApp
 
         }
 
-        public void CargarModelo(Paciente paciente)
+        public void CargarModelo(PacienteDTO paciente)
         {
             txtCedula.Text = paciente.Cedula;
             txtNombre.Text = paciente.Nombre;
