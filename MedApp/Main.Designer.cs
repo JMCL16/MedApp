@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.newPacientBtn = new System.Windows.Forms.Button();
             this.searchPacientBtn = new System.Windows.Forms.Button();
-            this.newConsulta = new System.Windows.Forms.Button();
+            this.newConsultaBtn = new System.Windows.Forms.Button();
             this.gestionarUserBtn = new System.Windows.Forms.Button();
             this.CloseSessionBtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -51,7 +51,6 @@
             this.newPacientBtn.TabIndex = 2;
             this.newPacientBtn.Text = "Nuevo Paciente";
             this.newPacientBtn.UseVisualStyleBackColor = true;
-            this.newPacientBtn.Click += new System.EventHandler(this.newPacientBtn_Click);
             // 
             // searchPacientBtn
             // 
@@ -63,19 +62,17 @@
             this.searchPacientBtn.TabIndex = 3;
             this.searchPacientBtn.Text = "Buscar Paciente";
             this.searchPacientBtn.UseVisualStyleBackColor = true;
-            this.searchPacientBtn.Click += new System.EventHandler(this.searchPacientBtn_Click);
             // 
-            // newConsulta
+            // newConsultaBtn
             // 
-            this.newConsulta.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.newConsulta.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newConsulta.Location = new System.Drawing.Point(439, 400);
-            this.newConsulta.Name = "newConsulta";
-            this.newConsulta.Size = new System.Drawing.Size(398, 88);
-            this.newConsulta.TabIndex = 4;
-            this.newConsulta.Text = "Nueva Consulta";
-            this.newConsulta.UseVisualStyleBackColor = true;
-            this.newConsulta.Click += new System.EventHandler(this.newConsulta_Click);
+            this.newConsultaBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.newConsultaBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newConsultaBtn.Location = new System.Drawing.Point(439, 400);
+            this.newConsultaBtn.Name = "newConsultaBtn";
+            this.newConsultaBtn.Size = new System.Drawing.Size(398, 88);
+            this.newConsultaBtn.TabIndex = 4;
+            this.newConsultaBtn.Text = "Nueva Consulta";
+            this.newConsultaBtn.UseVisualStyleBackColor = true;
             // 
             // gestionarUserBtn
             // 
@@ -107,7 +104,7 @@
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.CloseSessionBtn);
             this.panel1.Controls.Add(this.gestionarUserBtn);
-            this.panel1.Controls.Add(this.newConsulta);
+            this.panel1.Controls.Add(this.newConsultaBtn);
             this.panel1.Controls.Add(this.searchPacientBtn);
             this.panel1.Controls.Add(this.newPacientBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -172,7 +169,7 @@
         #endregion
         private System.Windows.Forms.Button newPacientBtn;
         private System.Windows.Forms.Button searchPacientBtn;
-        private System.Windows.Forms.Button newConsulta;
+        private System.Windows.Forms.Button newConsultaBtn;
         private System.Windows.Forms.Button gestionarUserBtn;
         private System.Windows.Forms.Button CloseSessionBtn;
         private System.Windows.Forms.Panel panel1;

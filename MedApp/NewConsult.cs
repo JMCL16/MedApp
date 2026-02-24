@@ -1,49 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MedApp.Presentation.DTOs.Consultas;
+using MedApp.Presentation.DTOs.Paciente;
+using MedApp.Services;
+using System;
 using System.Windows.Forms;
 
 namespace MedApp
 {
     public partial class NewConsult : Form
     {
-        private Paciente _paciente;
-        private ConsultaService consultaService;
-        public NewConsult(Paciente paciente)
+        private readonly ConsultaDTO consultaDTO;
+        private readonly ConsultaService _consultaService;
+        public NewConsult(PacienteDTO paciente)
         {
             InitializeComponent();
-            _paciente = paciente;
-            ConexionBD conexionBD = new ConexionBD();
-            consultaService = new ConsultaService(conexionBD);
-
-            txtNombreCompleto.Text = _paciente.NombreCompleto;
-            txtCedula.Text = _paciente.Cedula;
+            _consultaService = new ConsultaService();
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        private async void btnGuardar_Click(object sender, EventArgs e)
         {
-            Consulta consulta = new Consulta()
-            {
-                PacienteId = _paciente.Id,
-                FechaConsulta = DateTime.Now,
-                Diagnostico = rtbDiagnostico.Text,
-                Tratamiento = rtbTratamiento.Text,
-            };
-
             try
             {
-                consultaService.GuardarConsulta(consulta);
-                MessageBox.Show("Consulta guardada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                bool consulta = await _consultaService.CrearConsulta(consultaDTO);
+                if (consulta)
+                {
+                    MessageBox.Show("Consulta creada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                    new Main().Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Error al crear la consulta", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                MessageBox.Show("Error al guardar la consulta: " + ex.Message);
+               MessageBox.Show($"Error al crear la consulta: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

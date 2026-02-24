@@ -142,13 +142,13 @@ namespace MedApp
                 {
                     MessageBox.Show("Paciente creado exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
-                    /*
+                    
                     if( MessageBox.Show("¿Desea registrar una consulta para este paciente?", "Registrar Consulta", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        var pacienteCreado = await _service.ObtenerPorCedula(pacienteDto.Cedula);
-                        new NewConsult consult = new NewConsult(pacienteCreado);  
+                        var pacienteCreado = await _service.ObtenerPacientePorCedula(pacienteDto.Cedula);
+                        var consult = new NewConsult(pacienteCreado);  
                         consult.ShowDialog();
-                    }*/
+                    }
                     this.Close();
                 }
                 else

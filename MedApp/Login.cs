@@ -1,35 +1,29 @@
-﻿using System;
+﻿using MedApp.Services;
+using System;
 using System.Windows.Forms;
 
 namespace MedApp
 {
     public partial class Login : Form
     {
+        public readonly AuthService _authService;
 
         public Login()
         {
             InitializeComponent();
-            conexionBD = new ConexionBD();
+            _authService = new AuthService();
 
         }
 
 
-        private void SignBtn_Click(object sender, EventArgs e)
+        private async void SignBtn_Click(object sender, EventArgs e)
         {
             // Validar campos
-            if (string.IsNullOrWhiteSpace(txtUsuario.Text))
+            if (string.IsNullOrWhiteSpace(txtUsuario.Text) || string.IsNullOrWhiteSpace(txtContrasena.Text))
             {
                 MessageBox.Show("Ingrese el nombre de usuario", "Validación",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtUsuario.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtContrasena.Text))
-            {
-                MessageBox.Show("Ingrese la contraseña", "Validación",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtContrasena.Focus();
                 return;
             }
 
@@ -38,32 +32,35 @@ namespace MedApp
             SignBtn.Text = "Iniciando sesión...";
             this.Cursor = Cursors.WaitCursor;
 
-            // Autenticar
-            User usuario = conexionBD.Autenticar(
-                txtUsuario.Text.Trim(),
-                txtContrasena.Text
-            );
-
-            // Restaurar UI
-            SignBtn.Enabled = true;
-            SignBtn.Text = "Iniciar Sesión";
-            this.Cursor = Cursors.Default;
-
-            if (usuario != null)
+            try
             {
-                // Guardar sesión
-                SesionActual.usuarioActual = usuario;
-
-                // Cerrar login y abrir formulario principal
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+                var usuario = await _authService.LoginAsync(txtUsuario.Text.Trim(), txtContrasena.Text);
+                if (usuario != null)
+                {
+                    // Guardar sesión
+                    Sesion.IniciarSesion(usuario.Id, usuario.UserName, usuario.Rol);
+                    // Cerrar login y abrir formulario principal
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrectos", "Error de autenticación",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtContrasena.Clear();
+                    txtContrasena.Focus();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                MessageBox.Show("Usuario o contraseña incorrectos", "Error de autenticación",
+                MessageBox.Show("Ocurrió un error al intentar iniciar sesión: " + ex.Message, "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtContrasena.Clear();
-                txtContrasena.Focus();
+            }
+            finally
+            {
+                SignBtn.Enabled = true;
+                SignBtn.Text = "Iniciar Sesión";
+                this.Cursor = Cursors.Default;
             }
         }
     }
