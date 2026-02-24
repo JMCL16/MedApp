@@ -52,7 +52,7 @@ namespace MedApp.API.Controllers
             }
         }
 
-        [HttpGet("{nombre}")]
+        [HttpGet("buscar/{nombre}")]
         public async Task<IActionResult> ObtenerPacientesPorNombre(string nombre)
         {
             var result = await _pacienteService.ObtenerPorNombreAsync(nombre);

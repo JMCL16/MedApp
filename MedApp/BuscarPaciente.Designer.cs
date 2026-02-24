@@ -54,7 +54,7 @@
             this.dgvPacientes.Name = "dgvPacientes";
             this.dgvPacientes.RowHeadersWidth = 51;
             this.dgvPacientes.RowTemplate.Height = 24;
-            this.dgvPacientes.Size = new System.Drawing.Size(968, 354);
+            this.dgvPacientes.Size = new System.Drawing.Size(923, 354);
             this.dgvPacientes.TabIndex = 0;
             // 
             // groupBox1

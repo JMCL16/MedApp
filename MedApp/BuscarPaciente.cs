@@ -74,7 +74,7 @@ namespace MedApp
 
             if (string.IsNullOrWhiteSpace(criterioBusqueda))
             {
-                MessageBox.Show("Ingrese un criterio de búsqueda", "Validación",
+                MessageBox.Show("Ingrese los datos para el criterio de búsqueda", "Validación",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -88,7 +88,7 @@ namespace MedApp
             }
             else
             {
-                
+                pacientesEncontrados = await _service.BuscarPorNombre(criterioBusqueda);
             }
 
             dgvPacientes.DataSource = null;
