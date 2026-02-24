@@ -136,9 +136,32 @@ namespace MedApp
 
             try
             {
-                bool exito = await _service.CrearPaciente(pacienteDto);
+                DateTime fechaNac = paso1.FechaSeleccionada;
+                int edadCalculada = DateTime.Today.Year - fechaNac.Year;
+                if (fechaNac.Date > DateTime.Today.AddYears(-edadCalculada)) edadCalculada--;
 
-                if (exito)
+                var pacienteDto = new PacienteDTO
+                {
+                    Cedula = paso1.Cedula,
+                    Nombre = paso1.Nombre,
+                    Apellido = paso1.Apellido,
+                    FechaNacimiento = fechaNac,
+                    Edad = edadCalculada.ToString(),
+                    Genero = paso1.Genero,
+                    Nacionalidad = paso1.Nacionalidad,
+                    Direccion = paso1.Direccion,
+                    Ocupacion = paso1.Ocupacion,
+                    Telefono = paso1.Telefono,
+                    OperacionesPrevias = paso2.OperacionesPrevias,
+                    AntecedentesFamiliares = paso2.AntecedentesFamiliares,
+                    AntecedentesPatologicos = paso2.AntecedentesPatologicos,
+                    UsuarioRegistro = Sesion.IdUsuario,
+                    FechaRegistro = DateTime.Now,
+                };
+
+                var resultado = await _service.CrearPaciente(pacienteDto);
+
+                if (resultado != null && resultado.IsSuccess)
                 {
                     MessageBox.Show("Paciente creado exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
@@ -153,7 +176,8 @@ namespace MedApp
                 }
                 else
                 {
-                    MessageBox.Show("Error al crear el paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string mensajeError = resultado != null ? resultado.Message : "Ocurrió un error desconocido.";
+                    MessageBox.Show(mensajeError, "Corrija los siguientes errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                 }
             }

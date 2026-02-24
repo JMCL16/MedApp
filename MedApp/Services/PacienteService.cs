@@ -22,22 +22,14 @@ namespace MedApp.Presentation.Services
             _endpoint = $"{baseUrl}/Paciente";
         }
 
-        public async Task<bool> CrearPaciente(PacienteDTO pacienteDto)
+        public async Task<ApiResponse<PacienteDTO>> CrearPaciente(PacienteDTO pacienteDto)
         {
             var json = JsonConvert.SerializeObject(pacienteDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-
-                var response = await _client.PostAsync(_endpoint, content);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al crear paciente: {ex.Message}");
-                return false;
-            }
+            var response = await _client.PostAsync(_endpoint, content);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var resultado = JsonConvert.DeserializeObject<ApiResponse<PacienteDTO>>(jsonResponse);
+            return resultado; 
         }
 
         public async Task<PacienteDTO> ObtenerPacientePorCedula(string cedula)

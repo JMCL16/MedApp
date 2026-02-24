@@ -19,6 +19,43 @@ namespace MedApp
             lbSexo.SelectedIndex = 0;
         }
 
+        public DateTime FechaSeleccionada
+        {
+            get { return dtpFecha.Value; }
+        }
+        public string Genero
+        {
+            get { return lbSexo.SelectedItem?.ToString() ?? "Femenino"; }
+        }
+        public string Cedula
+        {
+            get { return txtCedula.Text.Trim(); }
+        }
+        public string Nombre
+        {
+            get { return txtNombre.Text.Trim(); }
+        }
+        public string Apellido
+        {
+            get { return txtApellidos.Text.Trim(); }
+        }
+        public string Nacionalidad
+        {
+            get { return txtNacionalidad.Text.Trim(); }
+        }
+        public string Direccion
+        {
+            get { return txtDireccion.Text.Trim(); }
+        }
+        public string Ocupacion
+        {
+            get { return txtOcupacion.Text.Trim(); }
+        }
+        public string Telefono
+        {
+            get { return txtNumeroTel.Text.Trim(); }
+        }
+
         public void GuardarModelo(PacienteDTO paciente)
         {
             paciente.Cedula = txtCedula.Text.Trim();
@@ -53,31 +90,39 @@ namespace MedApp
 
         public bool ValidarDatos()
         {
+            List<string> errores = new List<string>();
             if (string.IsNullOrWhiteSpace(txtCedula.Text))
             {
-                MessageBox.Show("La cédula es obligatoria", "Validación",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtCedula.Focus();
-                return false;
+                errores.Add("La cédula es obligatoria");
             }
 
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {
-                MessageBox.Show("El nombre es obligatorio", "Validación",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtNombre.Focus();
-                return false;
+                errores.Add("El nombre es obligatorio");
             }
 
             if (string.IsNullOrWhiteSpace(txtApellidos.Text))
             {
-                MessageBox.Show("El apellido es obligatorio", "Validación",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtApellidos.Focus();
-                return false;
+                errores.Add("El apellido es obligatorio");
+            }
+            if(Telefono.Length != 10 || !Telefono.All(char.IsDigit))
+            {
+                errores.Add("El teléfono debe tener 10 dígitos numéricos.");
+            }
+            DateTime fechaNacimiento = dtpFecha.Value;
+            int edadCalculada = DateTime.Today.Year - fechaNacimiento.Year;
+            if (fechaNacimiento.Date > DateTime.Today.AddYears(-edadCalculada))
+                edadCalculada--;
+            if (edadCalculada < 0)
+            {
+                errores.Add("La fecha de nacimiento no puede ser una futura");
             }
 
-
+            if (errores.Count > 0)
+            {
+                MessageBox.Show(string.Join("\n", errores), "Corrija los siguientes errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
             return true;
         }
     }

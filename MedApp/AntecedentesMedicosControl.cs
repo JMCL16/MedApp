@@ -18,6 +18,26 @@ namespace MedApp
             InitializeComponent();
         }
 
+        public string OperacionesPrevias
+        {
+            get { return txtCirugias.Text.Trim(); }
+        }
+        public string AntecedentesFamiliares
+        {
+            get { return txtAntecedentesFamiliares.Text.Trim(); }
+        }
+        public List<string> AntecedentesPatologicos
+        {
+            get
+            {
+                List<string> antecedentes = new List<string>();
+                foreach (var item in clbAntecedentesPatologicos.CheckedItems)
+                {
+                    antecedentes.Add(item.ToString());
+                }
+                return antecedentes;
+            }
+        }
         public void GuardarModelo(PacienteDTO paciente)
         {
             paciente.OperacionesPrevias = txtCirugias.Text;
