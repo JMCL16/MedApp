@@ -163,6 +163,7 @@
     <Compile Include="DatosPersonales.Designer.cs">
       <DependentUpon>DatosPersonales.cs</DependentUpon>
     </Compile>
+    <Compile Include="DTOs\ApiResponse.cs" />
     <Compile Include="DTOs\Consultas\ConsultaDTO.cs" />
     <Compile Include="DTOs\Consultas\ConsultaUpdateDTO.cs" />
     <Compile Include="DTOs\Login\AuthResponseDTO.cs" />

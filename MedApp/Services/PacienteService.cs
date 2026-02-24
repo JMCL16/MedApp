@@ -1,4 +1,5 @@
-﻿using MedApp.Presentation.DTOs.Paciente;
+﻿using MedApp.DTOs;
+using MedApp.Presentation.DTOs.Paciente;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,16 @@ namespace MedApp.Presentation.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
-                    return JsonConvert.DeserializeObject<PacienteDTO>(jsonResponse);
+                    var resultado = JsonConvert.DeserializeObject<ApiResponse<PacienteDTO>>(jsonResponse);
+                    if (resultado != null && resultado.IsSuccess)
+                    {
+                        return resultado.Data;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Error en la respuesta del API: {resultado?.Message}");
+                        return null;
+                    }
                 }
                 else
                 {
