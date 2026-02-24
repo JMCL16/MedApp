@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedApp.Presentation.DTOs.Paciente;
+using System;
 using System.Windows.Forms;
 
 namespace MedApp
@@ -49,13 +50,6 @@ namespace MedApp
 
         }
         
-
-        private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Cerrar sesión al cerrar el formulario
-            Sesion.CerrarSesion();
-        }
-
         private void CloseSessionBtn_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("¿Desea cerrar sesión?", "Confirmar",
@@ -65,5 +59,27 @@ namespace MedApp
                 this.Close();
             }
         }
-     }
+
+        private void newPacientBtn_Click(object sender, EventArgs e)
+        {
+            NewPacient newPacient = new NewPacient();
+            DialogResult result = newPacient.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                MessageBox.Show("Paciente creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void searchPacientBtn_Click(object sender, EventArgs e)
+        {
+            BuscarPaciente buscarPaciente = new BuscarPaciente();
+            DialogResult result = buscarPaciente.ShowDialog();
+        }
+
+        private void newConsultaBtn_Click(object sender, EventArgs e)
+        {
+            NewConsult newConsult = new NewConsult();
+            DialogResult result = newConsult.ShowDialog();
+        }
+    }
 }

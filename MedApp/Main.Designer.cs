@@ -51,6 +51,7 @@
             this.newPacientBtn.TabIndex = 2;
             this.newPacientBtn.Text = "Nuevo Paciente";
             this.newPacientBtn.UseVisualStyleBackColor = true;
+            this.newPacientBtn.Click += new System.EventHandler(this.newPacientBtn_Click);
             // 
             // searchPacientBtn
             // 
@@ -62,6 +63,7 @@
             this.searchPacientBtn.TabIndex = 3;
             this.searchPacientBtn.Text = "Buscar Paciente";
             this.searchPacientBtn.UseVisualStyleBackColor = true;
+            this.searchPacientBtn.Click += new System.EventHandler(this.searchPacientBtn_Click);
             // 
             // newConsultaBtn
             // 
@@ -73,6 +75,7 @@
             this.newConsultaBtn.TabIndex = 4;
             this.newConsultaBtn.Text = "Nueva Consulta";
             this.newConsultaBtn.UseVisualStyleBackColor = true;
+            this.newConsultaBtn.Click += new System.EventHandler(this.newConsultaBtn_Click);
             // 
             // gestionarUserBtn
             // 

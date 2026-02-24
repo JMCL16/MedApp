@@ -15,6 +15,12 @@ namespace MedApp
             InitializeComponent();
             _consultaService = new ConsultaService();
         }
+        
+        public NewConsult()
+        {
+            InitializeComponent();
+             _consultaService = new ConsultaService();
+        }
 
         private async void btnGuardar_Click(object sender, EventArgs e)
         {
