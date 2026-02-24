@@ -8,11 +8,13 @@ namespace MedApp
 {
     public partial class NewConsult : Form
     {
+        private readonly PacienteDTO _pacienteActual;
         private readonly ConsultaDTO consultaDTO;
         private readonly ConsultaService _consultaService;
-        public NewConsult(PacienteDTO paciente)
+        public NewConsult(PacienteDTO pacienteSeleccionado)
         {
             InitializeComponent();
+            _pacienteActual = pacienteSeleccionado;
             _consultaService = new ConsultaService();
         }
         
@@ -26,12 +28,20 @@ namespace MedApp
         {
             try
             {
-                bool consulta = await _consultaService.CrearConsulta(consultaDTO);
+                var consultaDto = new ConsultaDTO
+                {
+                    CedulaPaciente = _pacienteActual.Cedula,
+                    nombrePaciente = _pacienteActual.NombreCompleto,
+                    Diagnostico = rtbDiagnostico.Text,
+                    Tratamiento = rtbTratamiento.Text,
+                    FechaConsulta = DateTime.Now
+                };
+
+                bool consulta = await _consultaService.CrearConsulta(consultaDto);
                 if (consulta)
                 {
                     MessageBox.Show("Consulta creada exitosamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.DialogResult = DialogResult.OK;
-                    new Main().Show();
                     this.Close();
                 }
                 else
@@ -53,6 +63,15 @@ namespace MedApp
                 this.DialogResult = DialogResult.Cancel;
                 new Main().Show();
                 this.Close();
+            }
+        }
+
+        private void NewConsult_Load(object sender, EventArgs e)
+        {
+            if (_pacienteActual != null)
+            {
+                txtCedula.Text = _pacienteActual.Cedula;
+                txtNombreCompleto.Text = _pacienteActual.NombreCompleto;
             }
         }
     }

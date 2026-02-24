@@ -110,9 +110,21 @@ namespace MedApp
                 return;
             }
 
-            PacienteSeleccionado = (PacienteDTO)dgvPacientes.SelectedRows[0].DataBoundItem;
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            var confirmar = MessageBox.Show("Desea abrir una consulta con el paciente seleccionado", Text, MessageBoxButtons.YesNo);
+            if (confirmar == DialogResult.Yes)
+            {
+                PacienteSeleccionado = (PacienteDTO)dgvPacientes.CurrentRow.DataBoundItem;
+                NewConsult newConsult = new NewConsult(PacienteSeleccionado);
+                if (newConsult.ShowDialog() == DialogResult.OK)
+                {
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
+                }
+            }
+            else
+            {
+                this.DialogResult = DialogResult.OK;
+            }                
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
