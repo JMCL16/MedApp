@@ -9,7 +9,7 @@ namespace MedApp
         public Main()
         {
             InitializeComponent();
-            ConfigurarPermisos();
+            
             //MostrarInformacionUsuario();
         }
 
@@ -41,7 +41,7 @@ namespace MedApp
                     break;
                 case "Secretario":
                     gestionarUserBtn.Visible = false;
-                    newConsultaBtn.Visible = false;
+                    newConsultaBtn.Enabled = false;
                     break;
                 default:
                     MessageBox.Show($"Rol desconocido. ('{Sesion.Rol}'). Acceso limitado.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -80,6 +80,17 @@ namespace MedApp
         {
             NewConsult newConsult = new NewConsult();
             DialogResult result = newConsult.ShowDialog();
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            lblBienvenida.Text = $"Bienvenido/a, {Sesion.UserName}";
+            ConfigurarPermisos();
+        }
+
+        private void gestionarUserBtn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -38,6 +38,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.lblBienvenida = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             // 
             this.newPacientBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.newPacientBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newPacientBtn.Location = new System.Drawing.Point(439, 168);
+            this.newPacientBtn.Location = new System.Drawing.Point(213, 287);
             this.newPacientBtn.Name = "newPacientBtn";
             this.newPacientBtn.Size = new System.Drawing.Size(398, 87);
             this.newPacientBtn.TabIndex = 2;
@@ -57,7 +58,7 @@
             // 
             this.searchPacientBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.searchPacientBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchPacientBtn.Location = new System.Drawing.Point(439, 283);
+            this.searchPacientBtn.Location = new System.Drawing.Point(699, 287);
             this.searchPacientBtn.Name = "searchPacientBtn";
             this.searchPacientBtn.Size = new System.Drawing.Size(398, 85);
             this.searchPacientBtn.TabIndex = 3;
@@ -69,7 +70,7 @@
             // 
             this.newConsultaBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.newConsultaBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newConsultaBtn.Location = new System.Drawing.Point(439, 400);
+            this.newConsultaBtn.Location = new System.Drawing.Point(213, 434);
             this.newConsultaBtn.Name = "newConsultaBtn";
             this.newConsultaBtn.Size = new System.Drawing.Size(398, 88);
             this.newConsultaBtn.TabIndex = 4;
@@ -81,18 +82,19 @@
             // 
             this.gestionarUserBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.gestionarUserBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gestionarUserBtn.Location = new System.Drawing.Point(439, 646);
+            this.gestionarUserBtn.Location = new System.Drawing.Point(445, 589);
             this.gestionarUserBtn.Name = "gestionarUserBtn";
             this.gestionarUserBtn.Size = new System.Drawing.Size(398, 87);
             this.gestionarUserBtn.TabIndex = 5;
             this.gestionarUserBtn.Text = "Gestionar Usuarios";
             this.gestionarUserBtn.UseVisualStyleBackColor = true;
+            this.gestionarUserBtn.Click += new System.EventHandler(this.gestionarUserBtn_Click);
             // 
             // CloseSessionBtn
             // 
             this.CloseSessionBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CloseSessionBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CloseSessionBtn.Location = new System.Drawing.Point(439, 523);
+            this.CloseSessionBtn.Location = new System.Drawing.Point(699, 434);
             this.CloseSessionBtn.Name = "CloseSessionBtn";
             this.CloseSessionBtn.Size = new System.Drawing.Size(398, 87);
             this.CloseSessionBtn.TabIndex = 6;
@@ -102,6 +104,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.lblBienvenida);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label5);
@@ -150,6 +153,17 @@
             this.label5.Text = "Consultorio Medico ";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // lblBienvenida
+            // 
+            this.lblBienvenida.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lblBienvenida.AutoSize = true;
+            this.lblBienvenida.Font = new System.Drawing.Font("Times New Roman", 19.8F, System.Drawing.FontStyle.Bold);
+            this.lblBienvenida.Location = new System.Drawing.Point(206, 185);
+            this.lblBienvenida.Name = "lblBienvenida";
+            this.lblBienvenida.Size = new System.Drawing.Size(211, 37);
+            this.lblBienvenida.TabIndex = 13;
+            this.lblBienvenida.Text = "Bienvenido/a:";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -163,6 +177,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Principal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Main_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -179,6 +194,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblBienvenida;
     }
 }
 

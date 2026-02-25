@@ -60,11 +60,11 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(219, 159);
+            this.label1.Location = new System.Drawing.Point(197, 159);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(50, 20);
+            this.label1.Size = new System.Drawing.Size(72, 20);
             this.label1.TabIndex = 2;
-            this.label1.Text = "User:";
+            this.label1.Text = "Usuario:";
             // 
             // SignBtn
             // 
@@ -81,11 +81,11 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(181, 235);
+            this.label4.Location = new System.Drawing.Point(169, 235);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 20);
+            this.label4.Size = new System.Drawing.Size(100, 20);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Password:";
+            this.label4.Text = "Contraseña:";
             // 
             // label5
             // 
