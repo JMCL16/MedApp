@@ -9,7 +9,7 @@ namespace MedApp
     public partial class NewConsult : Form
     {
         private readonly PacienteDTO _pacienteActual;
-        private readonly ConsultaDTO consultaDTO;
+        private readonly ConsultaDTO consultaDto;
         private readonly ConsultaService _consultaService;
         public NewConsult(PacienteDTO pacienteSeleccionado)
         {

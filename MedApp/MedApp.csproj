@@ -200,6 +200,12 @@
     <Compile Include="Services\ConsultaService.cs" />
     <Compile Include="Services\PacienteService.cs" />
     <Compile Include="Sesion.cs" />
+    <Compile Include="ViewConsultas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ViewConsultas.Designer.cs">
+      <DependentUpon>ViewConsultas.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AntecedentesMedicosControl.resx">
       <DependentUpon>AntecedentesMedicosControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -230,6 +236,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ViewConsultas.resx">
+      <DependentUpon>ViewConsultas.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include=".editorconfig" />
     <None Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

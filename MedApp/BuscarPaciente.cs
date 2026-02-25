@@ -110,7 +110,7 @@ namespace MedApp
                 return;
             }
 
-            var confirmar = MessageBox.Show("Desea abrir una consulta con el paciente seleccionado", Text, MessageBoxButtons.YesNo);
+            var confirmar = MessageBox.Show("Desea crear una consulta con el paciente seleccionado", Text, MessageBoxButtons.YesNo);
             if (confirmar == DialogResult.Yes)
             {
                 PacienteSeleccionado = (PacienteDTO)dgvPacientes.CurrentRow.DataBoundItem;
@@ -123,7 +123,17 @@ namespace MedApp
             }
             else
             {
-                this.DialogResult = DialogResult.OK;
+                var verConsulta = MessageBox.Show("Desea ver las consultas del paciente seleccionado", Text, MessageBoxButtons.YesNo);
+                if (verConsulta == DialogResult.Yes)
+                {
+                    PacienteSeleccionado = (PacienteDTO)dgvPacientes.CurrentRow.DataBoundItem;
+                    ViewConsultas viewConsultas = new ViewConsultas(PacienteSeleccionado);
+                    if (viewConsultas.ShowDialog() == DialogResult.OK)
+                    {
+                        this.DialogResult = DialogResult.OK;
+                        this.Close();
+                    }
+                }
             }                
         }
 
