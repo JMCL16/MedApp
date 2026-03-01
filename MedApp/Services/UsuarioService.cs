@@ -12,19 +12,12 @@ namespace MedApp.Services
 {
     public class UsuarioService
     {
-        private readonly HttpClient _client;
-        private readonly string _endpoint;
-
-        public UsuarioService()
-        {
-            string baseUrl = AppConfig.ApiUrl;
-            _client = new HttpClient();
-            _endpoint = $"{baseUrl}/Usuario";
-        }
+        private readonly HttpClient _client = new HttpClient();
+        private readonly string _endpoint = $"{AppConfig.ApiUrl}/Autentication";
 
         public async Task<List<UsuarioDTO>> ObtenerTodos()
         {
-            var response = await _client.GetAsync($"{_endpoint}/Usuario");
+            var response = await _client.GetAsync($"{_endpoint}/Autentication");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -37,20 +30,24 @@ namespace MedApp.Services
             return new List<UsuarioDTO>();
         }
 
-        public async Task<bool> CrearUsuario(UsuarioDTO usuarioDto)
+        public async Task<ApiResponse<CrearUsuarioDTO>> CrearUsuario(CrearUsuarioDTO crearUsuarioDto)
         {
-            var json = JsonConvert.SerializeObject(usuarioDto);
+            var json = JsonConvert.SerializeObject(crearUsuarioDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            try
-            {
-                var response = await _client.PostAsync($"{_endpoint}/Usuario", content);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error al crear usuario: {ex.Message}");
-                return false;
-            }
+            var response = await _client.PostAsync($"{_endpoint}/register", content);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var resultado = JsonConvert.DeserializeObject<ApiResponse<CrearUsuarioDTO>>(jsonResponse);
+            return resultado;
+        }
+
+        public async Task<ApiResponse<UsuarioDTO>> ActualizarRol(ActualizarRolDTO actualizarRolDTO)
+        {
+            var json = JsonConvert.SerializeObject(actualizarRolDTO);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync($"{_endpoint}/update", content);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var resultado = JsonConvert.DeserializeObject<ApiResponse<UsuarioDTO>>(jsonResponse);
+            return resultado ?? new ApiResponse<UsuarioDTO> { IsSuccess = false, Message = "Error al actualizar rol" };
         }
     }
 }

@@ -26,7 +26,7 @@ namespace MedApp.API.Controllers
 
             if (!result.IsSuccess)
             {
-                return Unauthorized(new { mensaje = result.Message });
+                return Unauthorized(result);
             }
             return Ok(result.Data);
         }
@@ -38,19 +38,19 @@ namespace MedApp.API.Controllers
             var result = await _authService.RegisterAsync(registerDTO);
             if (!result.IsSuccess)
             {
-                return BadRequest(new { mensaje = result.Message });
+                return BadRequest(result);
             }
-            return Ok(201);
+            return Ok(result);
         }
-        [HttpPost("update")]
+        [HttpPatch("update")]
         public async Task<IActionResult> UpdateRol([FromBody] ActualizarRolDTO updateRolDTO)
         {
             var result = await _authService.UpdateRolAsync(updateRolDTO);
             if (!result.IsSuccess)
             {
-                return BadRequest(new { mensaje = result.Message });
+                return BadRequest(result);
             }
-            return Ok(result.Data);
+            return Ok(result);
         }
     }
 }

@@ -56,7 +56,7 @@ namespace MedApp
             MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Sesion.CerrarSesion();
-                this.Close();
+                Application.Restart();
             }
         }
 
@@ -90,7 +90,9 @@ namespace MedApp
 
         private void gestionarUserBtn_Click(object sender, EventArgs e)
         {
-
+            GestionUsuarios gestionUsuarios = new GestionUsuarios();
+            DialogResult result = gestionUsuarios.ShowDialog();
+            this.Hide();
         }
     }
 }
