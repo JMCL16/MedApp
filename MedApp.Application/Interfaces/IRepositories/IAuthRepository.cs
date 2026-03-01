@@ -13,5 +13,6 @@ namespace MedApp.Application.Interfaces.IRepositories
         Task<User?> validateUserAsync (string user);
         Task<OperationResult> crearUsuarioAsync (User user);
         Task<OperationResult> actualizarRolUsuarioAsync (int usuarioId, string nuevoRol);
+        Task<List<User>> ObtenerTodosUsuariosAsync();
     }
 }

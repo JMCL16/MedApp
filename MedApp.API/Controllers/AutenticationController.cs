@@ -42,10 +42,20 @@ namespace MedApp.API.Controllers
             }
             return Ok(result);
         }
-        [HttpPatch("update")]
+        [HttpPut]
         public async Task<IActionResult> UpdateRol([FromBody] ActualizarRolDTO updateRolDTO)
         {
             var result = await _authService.UpdateRolAsync(updateRolDTO);
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ObtenerTodosUsuarios()
+        {
+            var result = await _authService.ObtenerTodosUsuariosAsync();
             if (!result.IsSuccess)
             {
                 return BadRequest(result);

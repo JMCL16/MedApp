@@ -33,7 +33,7 @@ namespace MedApp
                 {
                     UserName = txtUsuario.Text.Trim(),
                     Password = txtContrasena.Text,
-                    Rol = cmbRol.SelectedItem.ToString()
+                    Roles = cmbRol.SelectedItem.ToString()
                 };
 
                 

@@ -17,7 +17,7 @@ namespace MedApp.Services
 
         public async Task<List<UsuarioDTO>> ObtenerTodos()
         {
-            var response = await _client.GetAsync($"{_endpoint}/Autentication");
+            var response = await _client.GetAsync($"{_endpoint}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -44,7 +44,7 @@ namespace MedApp.Services
         {
             var json = JsonConvert.SerializeObject(actualizarRolDTO);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var response = await _client.PostAsync($"{_endpoint}/update", content);
+            var response = await _client.PutAsync($"{_endpoint}", content);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             var resultado = JsonConvert.DeserializeObject<ApiResponse<UsuarioDTO>>(jsonResponse);
             return resultado ?? new ApiResponse<UsuarioDTO> { IsSuccess = false, Message = "Error al actualizar rol" };

@@ -77,7 +77,6 @@ namespace MedApp
             "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 this.DialogResult = DialogResult.Cancel;
-                new Main().Show();
                 this.Close();
             }
         }

@@ -8,5 +8,6 @@ namespace MedApp.Application.Interfaces.IServices
         Task<OperationResult> LoginAsync(LoginDTO loginDTO);
         Task<OperationResult> RegisterAsync(LoginDTO registerDTO);
         Task<OperationResult> UpdateRolAsync(ActualizarRolDTO actualizarRolDTO);
+        Task<OperationResult> ObtenerTodosUsuariosAsync();
     }
 }

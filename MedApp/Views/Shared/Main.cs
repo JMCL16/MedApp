@@ -10,7 +10,6 @@ namespace MedApp
         {
             InitializeComponent();
             
-            //MostrarInformacionUsuario();
         }
 
         private void ConfigurarPermisos()
@@ -33,7 +32,7 @@ namespace MedApp
 
             switch (Sesion.Rol)
             {
-                case "admin":
+                case "Admin":
                     gestionarUserBtn.Visible = true;
                     break;
                 case "Medico":
@@ -92,7 +91,6 @@ namespace MedApp
         {
             GestionUsuarios gestionUsuarios = new GestionUsuarios();
             DialogResult result = gestionUsuarios.ShowDialog();
-            this.Hide();
         }
     }
 }

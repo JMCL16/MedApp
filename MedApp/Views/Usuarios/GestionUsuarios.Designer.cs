@@ -36,6 +36,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Roles = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Activo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsuarios)).BeginInit();
             this.SuspendLayout();
@@ -64,6 +68,7 @@
             this.btnCancelar.TabIndex = 6;
             this.btnCancelar.Text = "CANCELAR";
             this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnEditar
             // 
@@ -75,6 +80,7 @@
             this.btnEditar.TabIndex = 18;
             this.btnEditar.Text = "EDITAR";
             this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnNuevoUsuario
             // 
@@ -91,6 +97,11 @@
             // dgvUsuarios
             // 
             this.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUsuarios.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Id,
+            this.UserName,
+            this.Roles,
+            this.Activo});
             this.dgvUsuarios.Location = new System.Drawing.Point(314, 196);
             this.dgvUsuarios.Name = "dgvUsuarios";
             this.dgvUsuarios.RowHeadersWidth = 51;
@@ -129,6 +140,44 @@
             this.label2.TabIndex = 14;
             this.label2.Text = "Dra. Luchy Romero";
             // 
+            // Id
+            // 
+            this.Id.DataPropertyName = "Id";
+            this.Id.HeaderText = "Id";
+            this.Id.MinimumWidth = 6;
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Width = 125;
+            // 
+            // UserName
+            // 
+            this.UserName.DataPropertyName = "UserName";
+            this.UserName.HeaderText = "Usuario";
+            this.UserName.MinimumWidth = 6;
+            this.UserName.Name = "UserName";
+            this.UserName.ReadOnly = true;
+            this.UserName.Width = 125;
+            // 
+            // Roles
+            // 
+            this.Roles.DataPropertyName = "Roles";
+            this.Roles.HeaderText = "Rol";
+            this.Roles.Items.AddRange(new object[] {
+            "Medico",
+            "Secretario",
+            "Admin"});
+            this.Roles.MinimumWidth = 6;
+            this.Roles.Name = "Roles";
+            this.Roles.Width = 125;
+            // 
+            // Activo
+            // 
+            this.Activo.DataPropertyName = "Activo";
+            this.Activo.HeaderText = "Es Activo?";
+            this.Activo.MinimumWidth = 6;
+            this.Activo.Name = "Activo";
+            this.Activo.Width = 125;
+            // 
             // GestionUsuarios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -158,5 +207,9 @@
         private System.Windows.Forms.Button btnNuevoUsuario;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Roles;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Activo;
     }
 }

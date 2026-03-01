@@ -96,5 +96,18 @@ namespace MedApp.Application.Services
                 return Convert.ToBase64String(bytes);
             }
         }
+
+        public async Task<OperationResult> ObtenerTodosUsuariosAsync()
+        {
+            try
+            {
+                var usuarios = await _authRepository.ObtenerTodosUsuariosAsync();
+                return OperationResult.Success("Usuarios obtenidos exitosamente.", usuarios);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult.Failure($"Error al obtener usuarios: {ex.Message}");
+            }
+        }
     }
 }

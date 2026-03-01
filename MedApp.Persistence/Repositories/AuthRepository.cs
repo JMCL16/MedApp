@@ -101,6 +101,44 @@ namespace MedApp.Persistence.Repositories
             return result;
         }
 
+        public async Task<List<User>> ObtenerTodosUsuariosAsync()
+        {
+            List<User> usuarios = new List<User>();
+
+            try
+            {
+                _logger.LogInformation("Obteniendo todos los usuarios");
+                using (var conn = new SqlConnection(_conexionBD))
+                {
+                    await conn.OpenAsync();
+                    using (SqlCommand cmd = new SqlCommand("sp_ObtenerTodosUsuarios", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                User usuario = new User
+                                {
+                                    Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                    UserName = reader.GetString(reader.GetOrdinal("UserName")),
+                                    Roles = reader.GetString(reader.GetOrdinal("Roles")),
+                                    Activo = reader.GetBoolean(reader.GetOrdinal("Activo"))
+                                };
+                                usuarios.Add(usuario);
+                            }
+                            _logger.LogInformation("{UserCount} usuarios obtenidos", usuarios.Count);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Excepción al obtener todos los usuarios");
+            }
+            return usuarios;
+        }
+
         public async Task<User?> validateUserAsync(string user)
         {
             try
